@@ -2,26 +2,26 @@
     InK: InCopy/K4 automation suite
     By Nader Heidari
 */
-if (typeof app === "undefined"){
-app = {
-    activeDocument: {
-        stories: [{
-            notes: [{
-                name: "Note",
-                texts: [{
-                    contents: "{keywords: herp~derp}"
+if (typeof app === "undefined") {
+    app = {
+        activeDocument: {
+            stories: [{
+                notes: [{
+                    name: "Note",
+                    texts: [{
+                        contents: "{keywords: herp~derp}"
+                    }]
+                }]
+            }, {
+                notes: [{
+                    name: "Note",
+                    texts: [{
+                        contents: "{keywords: herp~derp}"
+                    }]
                 }]
             }]
-        }, {
-            notes: [{
-                name: "Note",
-                texts: [{
-                    contents: "{keywords: herp~derp}"
-                }]
-            }]
-        }]
-    }
-};
+        }
+    };
 }
 var InK = {
     commands: {
@@ -37,7 +37,13 @@ var InK = {
                 item;
             for (i = 0; i < app.activeDocument.stories.length; i++) {
                 notes = app.activeDocument.stories[i].notes;
-                noteQueue = (function (e) {var i, arr=[];for (i=0;i<notes.length;i++){arr.push(notes[i])}return arr;})(notes);
+                noteQueue = (function(e) {
+                    var i, arr = [];
+                    for (i = 0; i < notes.length; i++) {
+                        arr.push(notes[i])
+                    }
+                    return arr;
+                })(notes);
                 item = noteQueue.shift();
                 while (item !== undefined) {
                     results.push(item);
@@ -81,3 +87,26 @@ var InK = {
     }
 };
 InK.interp.parseCommands();
+
+function getMetadataMap() {
+    var defs = app.k4Publications[0].k4MetaDataDefs;
+    var obj = {};
+    for (var i = 0; i < defs.length; i++) {
+
+        switch (defs[i].k4MetaDataDataType.toString()) {
+            case "K4_STRING":
+                obj[defs[i].k4Name] = "string";
+                break;
+            case "K4_VALUE_LIST":
+                obj[defs[i].k4Name] = [];
+                for (var j = 0; j < defs[i].k4MetaDataDefValueLists.length; j++) {
+                    obj[defs[i].k4Name].pushdefs[i].k4MetaDataDefValueLists[j].k4Name);
+        }
+        break;
+        case "K4_INTEGER":
+            obj[defs[i].k4Name] = [true, false];
+            break;
+    }
+}
+return obj;
+}
