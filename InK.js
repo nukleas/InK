@@ -2,6 +2,10 @@
     InK: InCopy/K4 automation suite
     By Nader Heidari
 */
+/*
+    The following junk is a pseudo-testing thing for the parser
+    in case I am not able to access InCopy.
+*/
 if (typeof app === "undefined") {
     app = {
         activeDocument: {
@@ -23,6 +27,10 @@ if (typeof app === "undefined") {
         }
     };
 }
+/*
+    End Testing stuff
+*/
+
 var InK = {
     commands: {
         keywords: {
