@@ -100,7 +100,7 @@ function getMetadataMap() {
             case "K4_VALUE_LIST":
                 obj[defs[i].k4Name] = [];
                 for (var j = 0; j < defs[i].k4MetaDataDefValueLists.length; j++) {
-                    obj[defs[i].k4Name].pushdefs[i].k4MetaDataDefValueLists[j].k4Name);
+                    obj[defs[i].k4Name].push(defs[i].k4MetaDataDefValueLists[j].k4Name);
         }
         break;
         case "K4_INTEGER":
