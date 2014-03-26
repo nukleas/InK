@@ -101,12 +101,12 @@ function getMetadataMap() {
                 obj[defs[i].k4Name] = [];
                 for (var j = 0; j < defs[i].k4MetaDataDefValueLists.length; j++) {
                     obj[defs[i].k4Name].push(defs[i].k4MetaDataDefValueLists[j].k4Name);
+                }
+                break;
+            case "K4_INTEGER":
+                obj[defs[i].k4Name] = [true, false];
+                break;
         }
-        break;
-        case "K4_INTEGER":
-            obj[defs[i].k4Name] = [true, false];
-            break;
     }
-}
-return obj;
+    return obj;
 }
