@@ -123,7 +123,7 @@ function getMetadataMap() {
             }
             break;
         case "K4_INTEGER":
-            obj[defs[i].k4Name] = [true, false];
+            obj[defs[i].k4Name] = 0;
             break;
         }
     }
