@@ -41,12 +41,12 @@ var InK = {
     },
     interp: {
         getAllNotes: function () {
-		    "use strict";
+            "use strict";
             var i, results = [],
                 notes,
                 noteQueue = [],
                 item,
-				inCopyObjToArray = function (e) {
+                inCopyObjToArray = function (e) {
                     var i, arr = [];
                     for (i = 0; i < e.length; i += 1) {
                         arr.push(e[i]);
@@ -65,10 +65,10 @@ var InK = {
             return results;
         },
         extractCommands: function (notes) {
-		    "use strict";
+            "use strict";
             var commands = [],
                 commandRegex = /\{.*?\}/,
-				i;
+                i;
             for (i = 0; i < notes.length; i += 1) {
                 if (commandRegex.test(notes[i].texts[0].contents)) {
                     commands.push({
@@ -80,8 +80,8 @@ var InK = {
             return commands;
         },
         parseCommands: function () {
-		    "use strict";
-		    var derp, herp, i;
+            "use strict";
+            var derp, herp, i;
             derp = this.getAllNotes();
             herp = this.extractCommands(derp);
             for (i = 0; i < herp.length; i += 1) {
@@ -90,7 +90,7 @@ var InK = {
             return herp;
         },
         parseCommand: function (string) {
-		    "use strict";
+            "use strict";
             var i, commandArray, command;
             command = string.match(/\{(.*?)\}/)[1];
             commandArray = command.replace(/^\s+|\s+$/g, "").replace(/(^\{|\}$)/g, "").split(":");
@@ -119,7 +119,7 @@ function getMetadataMap() {
         case "K4_VALUE_LIST":
             obj[defs[i].k4Name] = [];
             for (j = 0; j < defs[i].k4MetaDataDefValueLists.length; j += 1) {
-				obj[defs[i].k4Name].push(defs[i].k4MetaDataDefValueLists[j].k4Name);
+                obj[defs[i].k4Name].push(defs[i].k4MetaDataDefValueLists[j].k4Name);
             }
             break;
         case "K4_INTEGER":
