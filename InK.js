@@ -1,4 +1,4 @@
-﻿/*jslint regexp:true */
+/*jslint regexp:true */
 /*global app*/
 /*
     InK: InCopy/K4 automation suite
@@ -35,8 +35,44 @@ if (app === undefined) {
 
 var InK = {
     commands: {
-        keywords: {
+        mapMetadataTo: function (data, taskObj) {
+		    "use strict";
+			var item;
+            this.taskObj = taskObj;
 
+            function setMetadataValue(field, value) {
+                var metadata_value,
+				    values = taskObj.k4MetaDataValues,
+				    def,
+				    defs = app.k4Publications[0].k4MetaDataDefs,
+				    valueList;
+                metadata_value = values.k4GetByName(field);
+                def = defs.k4GetByName(field);
+                switch (def.k4MetaDataDataType.toString()) {
+                case "K4_STRING":
+                    metadata_value.k4StringValue = value;
+                    break;
+                case "K4_VALUE_LIST":
+                    valueList = def.k4MetaDataDefValueLists.k4GetByName(value);
+                    if (valueList.isValid) {
+                        metadata_value.k4ValueListValue = valueList.k4Id;
+                    }
+                    break;
+                case "K4_INTEGER":
+				    if (value === true || value === false) {
+                        metadata_value.k4IntValue = value ? 1 : 0;
+					} else {
+					    metadata_value.k4IntValue = value;
+					}
+                    break;
+                }
+
+            }
+            for (item in data) {
+                if (data.hasOwnProperty(item) && app.k4Publications[0].k4MetaDataDefs.k4GetByName(item)) {
+                    setMetadataValue(item, data[item]);
+                }
+            }
         }
     },
     interp: {
@@ -81,13 +117,13 @@ var InK = {
         },
         parseCommands: function () {
             "use strict";
-            var derp, herp, i;
-            derp = this.getAllNotes();
-            herp = this.extractCommands(derp);
-            for (i = 0; i < herp.length; i += 1) {
-                herp[i].command = this.parseCommand(herp[i].contents);
+            var notes, commands, i;
+            notes = this.getAllNotes();
+            commands = this.extractCommands(notes);
+            for (i = 0; i < commands.length; i += 1) {
+                commands[i].command = this.parseCommand(commands[i].contents);
             }
-            return herp;
+            return commands;
         },
         parseCommand: function (string) {
             "use strict";
