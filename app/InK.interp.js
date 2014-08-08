@@ -109,8 +109,8 @@ InK.interp = {
             value: stripSpaces(command.substring(command.indexOf(":") + 1))
         };
         if (parsedCommand.field && parsedCommand.value) {
-            if (InK.map.InKSearch.get(parsedCommand.field)) {
-                closestMatch = InK.map.InKSearch.get(parsedCommand.field)[0][1];
+            if (InK.map.fuzzyGet(parsedCommand.field)) {
+                closestMatch = InK.map.fuzzyGet(parsedCommand.field);
                 parsedCommand.field = InK.map[closestMatch].names[0];
             }
             return parsedCommand;

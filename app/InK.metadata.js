@@ -38,7 +38,14 @@ InK.getMap = function () {
         return obj;
     }(metadataMap));
     metadataMap.Fuzzy = new this.FuzzySet(metadataMap.slugs, false, 2, 2);
-    this.metadataMap = metadataMap;
+    metadataMap.fuzzyGet = function (str) {
+        var found = this.Fuzzy.get(str);
+        if (found && found.length) {
+            return found[0][1];
+        }
+        return false;
+    };
+    this.map = metadataMap;
     return metadataMap;
 };
 

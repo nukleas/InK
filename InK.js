@@ -28,12 +28,12 @@ var InK = {
     },
     require: function (path) {
         "use strict";
-        var local = new File(this.find_script_dir());
+        var local = new File(this.find_script_dir()), newPath;
+        newPath = local + path;
         if (path.substring(0, 3) === "../") {
-            path = path.substring(2);
-            local = local.parent;
+            newPath = path.substring(2) + local.parent;
         }
-        $.evalFile(local + path);
+        $.evalFile(newPath);
     }
 };
 
