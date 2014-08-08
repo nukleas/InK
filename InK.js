@@ -1,4 +1,4 @@
-/*jslint regexp:true */
+﻿/*jslint regexp:true */
 /*global app*/
 /*
     InK: InCopy/K4 automation suite
@@ -28,7 +28,7 @@ var InK = {
     },
     require: function (path) {
         "use strict";
-        var local = new File(find_script_dir());
+        var local = new File(this.find_script_dir());
         if (path.substring(0, 3) === "../") {
             path = path.substring(2);
             local = local.parent;
@@ -36,3 +36,14 @@ var InK = {
         $.evalFile(local + path);
     }
 };
+
+InK.require('/includes/FuzzySet.jsx');
+InK.require('/includes/JSON.jsx');
+InK.require('/app/InK.metadata.js');
+InK.require('/app/InK.interp');
+
+InK.styleToLabelMap = InK.getJSON('/config/styleMap.json');
+
+InK.getMap();
+InK.metadataMap.Fuzzy.get("webhead");
+$.bp(true);
