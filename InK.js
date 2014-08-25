@@ -1,5 +1,5 @@
 ﻿/*jslint regexp:true */
-/*global app, $*/
+/*global app, $, File*/
 /*
     InK: InCopy/K4 automation suite
     By Nader Heidari
@@ -8,10 +8,16 @@
 var InK = {
     find_script_dir: function () {
         "use strict";
+        var a;
         try {
             return new File(app.activeScript).path;
         } catch (e) {
-            return new File(e.fileName).path;
+            try {
+                a = new File($.fileName).path;
+                return a;
+            } catch (e) {
+                return new File(e.fileName).path;
+            }
         }
     },
     getJSON: function (path) {
@@ -28,12 +34,17 @@ var InK = {
     },
     require: function (path) {
         "use strict";
-        var local = new File(this.find_script_dir());
+        var newPath, local = new File(this.find_script_dir());
         if (path.substring(0, 3) === "../") {
-            path = path.substring(2);
-            local = local.parent;
+            newPath = local.parent + path.substring(2);
+        } else {
+            newPath = local + path;
         }
-        $.evalFile(local + path);
+        if (path.match(/\.json$/)) {
+            return this.getJSON(newPath);
+        } else {
+            $.evalFile(newPath);
+        }
     },
     forEach: function (thing, doSomething, forFirst, forLast) {
         "use strict";
@@ -54,12 +65,10 @@ var InK = {
         return results;
     }
 };
-
+// Get the required bits
 InK.require('/includes/FuzzySet.jsx');
 InK.require('/includes/JSON.jsx');
 InK.require('/app/InK.metadata.js');
 InK.require('/app/InK.interp.js');
-
+// Get the paragraph-style-to-object-label map.
 InK.styleToLabelMap = InK.getJSON('/config/styleMap.json');
-
-$.bp(true);
