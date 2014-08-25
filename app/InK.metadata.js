@@ -60,19 +60,19 @@ InK.mapMetadataTo = function (data, taskObj) {
         metadataValue = values.k4GetByName(field);
         def = defs.k4GetByName(field);
         switch (def.k4MetaDataDataType.toString()) {
-        case "K4_STRING":
-            metadataValue.k4StringValue = value;
-            break;
-        case "K4_VALUE_LIST":
-            valueLists = def.k4MetaDataDefValueLists;
-            valueList = valueLists.k4GetByName(value) || new this.FuzzySet(valueLists.everyItem().k4Name).get(value)[0][1];
-            if (valueList && valueList.isValid) {
-                metadataValue.k4ValueListValue = valueList.k4Id;
-            }
-            break;
-        case "K4_INTEGER":
-            metadataValue.k4IntValue = value || 0;
-            break;
+            case "K4_STRING":
+                metadataValue.k4StringValue = value;
+                break;
+            case "K4_VALUE_LIST":
+                valueLists = def.k4MetaDataDefValueLists;
+                valueList = valueLists.k4GetByName(value) || new this.FuzzySet(valueLists.everyItem().k4Name).get(value)[0][1];
+                if (valueList && valueList.isValid) {
+                    metadataValue.k4ValueListValue = valueList.k4Id;
+                }
+                break;
+            case "K4_INTEGER":
+                metadataValue.k4IntValue = value || 0;
+                break;
         }
 
     }

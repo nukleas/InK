@@ -1,21 +1,14 @@
 InK.interp = {
     getAllNotes: function () {
         "use strict";
-        var makeNoteQueue = function (notes) {
-                var i, arr = [];
-                for (i = 0; i < notes.length; i += 1) {
-                    arr.push(notes[i]);
-                }
-                return arr;
-            },
-            i,
+        var i,
             results = [],
             notes,
             noteQueue = [],
             item;
         for (i = 0; i < app.activeDocument.stories.length; i += 1) {
             notes = app.activeDocument.stories[i].notes;
-            noteQueue = makeNoteQueue(notes);
+            noteQueue = InK.collectionToArray(notes);
             item = noteQueue.shift();
             while (item !== undefined) {
                 results.push(item);
@@ -25,14 +18,8 @@ InK.interp = {
         return results;
     },
     getNotesFromStory: function (story) {
-        var makeNoteQueue = function (notes) {
-            var i, arr = [];
-            for (i = 0; i < notes.length; i += 1) {
-                arr.push(notes[i]);
-            }
-            return arr;
-        }, results = [], item, noteQueue, notes = story.notes;
-        noteQueue = makeNoteQueue(notes);
+        var results = [], item, noteQueue, notes = story.notes;
+        noteQueue = InK.collectionToArray(notes);
         item = noteQueue.shift();
         while (item !== undefined) {
             results.push(item);
@@ -88,9 +75,8 @@ InK.interp = {
                 return obj;
             };
             return commands;
-        } else {
-            return false;
         }
+        return false;
     },
     parseCommand: function (string) {
         "use strict";
@@ -101,7 +87,6 @@ InK.interp = {
             return str.replace(/^\s+|\s+$/g, "");
         }
 
-        // This is having some unwanted behavior, use something like command.substring(command.indexOf(":")+1)
         command = stripSpaces(command).replace(/(^\{|\}$)/g, "");
         parsedCommand = {
             command: "setMetadata",

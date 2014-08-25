@@ -34,3 +34,6 @@ if (app === undefined) {
         }
     };
 }
+// test if metadata mapping works
+InK.getMap();
+InK.metadataMap.Fuzzy.get("webhead");

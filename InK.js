@@ -1,5 +1,5 @@
 ﻿/*jslint regexp:true */
-/*global app*/
+/*global app, $*/
 /*
     InK: InCopy/K4 automation suite
     By Nader Heidari
@@ -28,22 +28,38 @@ var InK = {
     },
     require: function (path) {
         "use strict";
-        var local = new File(this.find_script_dir()), newPath;
-        newPath = local + path;
+        var local = new File(this.find_script_dir());
         if (path.substring(0, 3) === "../") {
-            newPath = path.substring(2) + local.parent;
+            path = path.substring(2);
+            local = local.parent;
         }
-        $.evalFile(newPath);
+        $.evalFile(local + path);
+    },
+    forEach: function (thing, doSomething, forFirst, forLast) {
+        "use strict";
+        var i, results = [], last;
+        if (forFirst) {
+            results.push(forFirst(thing.shift()));
+        }
+        if (forLast) {
+            last = thing.pop();
+        }
+        for (i = 0; i < thing.length; i += 1) {
+
+            results.push(doSomething(thing[i]));
+        }
+        if (forLast) {
+            results.push(forLast(last));
+        }
+        return results;
     }
 };
 
 InK.require('/includes/FuzzySet.jsx');
 InK.require('/includes/JSON.jsx');
 InK.require('/app/InK.metadata.js');
-InK.require('/app/InK.interp');
+InK.require('/app/InK.interp.js');
 
 InK.styleToLabelMap = InK.getJSON('/config/styleMap.json');
 
-InK.getMap();
-InK.metadataMap.Fuzzy.get("webhead");
 $.bp(true);
