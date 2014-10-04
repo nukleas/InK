@@ -9,6 +9,7 @@ var InK = {
     find_script_dir: function () {
         "use strict";
         var a;
+        // TODO: Ugh. I hate try-catches. Should refactor.
         try {
             return new File(app.activeScript).path;
         } catch (e) {
@@ -70,5 +71,6 @@ InK.require('/includes/FuzzySet.jsx');
 InK.require('/includes/JSON.jsx');
 InK.require('/app/InK.metadata.js');
 InK.require('/app/InK.interp.js');
+
 // Get the paragraph-style-to-object-label map.
-InK.styleToLabelMap = InK.getJSON('/config/styleMap.json');
+InK.styleToLabelMap = InK.require('/config/styleMap.json');
