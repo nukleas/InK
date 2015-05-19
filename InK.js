@@ -1,8 +1,8 @@
 ﻿/*jslint regexp:true */
 /*global app, $, File*/
-/*
+/**
     InK: InCopy/K4 automation suite
-    By Nader Heidari
+    @author Nader Heidari <nader.c.heidari@gmail.com>
 */
 
 var InK = {
